@@ -6,6 +6,9 @@ import { cn } from '@/lib/utils'
 import './globals.css'
 import { ReactNode } from 'react'
 import { CartProvider } from '../context/CartContext'
+import outputs from '../amplify_outputs.json'
+import { Amplify } from 'aws-amplify'
+
 const fontHeading = DM_Sans({
   subsets: ['latin'],
   display: 'swap',
@@ -23,6 +26,8 @@ const fontBody = Space_Mono({
 interface LayoutProps {
   children: ReactNode
 }
+
+Amplify.configure(outputs)
 
 export default function Layout({ children }: LayoutProps): JSX.Element {
   return (
