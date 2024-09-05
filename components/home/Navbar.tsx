@@ -9,12 +9,23 @@ import { motion, useScroll, useTransform } from "framer-motion"
 import { useEffect, useState } from "react"
 import { useCart } from "@/context/CartContext"
 
+import GlobalSearch from "./GlobalSearch"
+
 export default function Navbar() {
   // State and hooks for navbar functionality
   const [isScrolled, setIsScrolled] = useState(false)
   const { scrollY } = useScroll()
   const [cartItemCount, setCartItemCount] = useState(0)
-  const {cart} = useCart()
+  const { cart } = useCart()
+
+
+
+
+
+
+
+
+
 
   // Dynamic styles for header based on scroll position
   const headerBackground = useTransform(
@@ -38,9 +49,12 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", updateScroll)
   }, [])
 
+
+
+
   return (
     // Main header component with dynamic styling
-    <motion.header 
+    <motion.header
       className="w-full sticky top-0 z-50"
       style={{
         backgroundColor: headerBackground,
@@ -61,20 +75,10 @@ export default function Navbar() {
         </motion.div>
 
         {/* Search form for desktop */}
-        <motion.form 
-          className="relative hidden w-full max-w-md md:flex"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-        >
-          <div className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground">
-            <SearchIcon className="h-4 w-4" />
-          </div>
-          <Input type="search" placeholder="Search..." className="w-full rounded-md pl-8" />
-        </motion.form>
+        <GlobalSearch />
 
         {/* Navigation links for desktop */}
-        <motion.nav 
+        <motion.nav
           className="hidden gap-4 md:flex items-center"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -97,14 +101,14 @@ export default function Navbar() {
           </Link>
           {/* Shopping cart icon with item count */}
           <Link href="/cart">
-            <motion.div 
+            <motion.div
               className="relative cursor-pointer"
               whileHover={{ scale: 1.1 }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
             >
               <ShoppingCartIcon className="h-6 w-6" />
               {cart.length > 0 && (
-                <motion.span 
+                <motion.span
                   className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs"
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
@@ -198,7 +202,7 @@ export default function Navbar() {
 }
 
 // Icon components
-function MenuIcon(props:any) {
+function MenuIcon(props: any) {
   return (
     <svg
       {...props}
@@ -219,7 +223,7 @@ function MenuIcon(props:any) {
   )
 }
 
-function MountainIcon(props:any) {
+function MountainIcon(props: any) {
   return (
     <svg
       {...props}
@@ -238,7 +242,7 @@ function MountainIcon(props:any) {
   )
 }
 
-function SearchIcon(props:any) {
+function SearchIcon(props: any) {
   return (
     <svg
       {...props}
@@ -258,7 +262,7 @@ function SearchIcon(props:any) {
   )
 }
 
-function XIcon(props:any) {
+function XIcon(props: any) {
   return (
     <svg
       {...props}
@@ -278,7 +282,7 @@ function XIcon(props:any) {
   )
 }
 
-function ShoppingCartIcon(props:any) {
+function ShoppingCartIcon(props: any) {
   return (
     <svg
       {...props}
