@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
 
-const SearchResultPage = () => {
+const SearchResults = () => {
   const searchParams = useSearchParams();
   const query = searchParams.get("query");
 
@@ -84,6 +84,14 @@ const SearchResultPage = () => {
         </div>
       )}
     </div>
+  );
+};
+
+const SearchResultPage = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SearchResults />
+    </Suspense>
   );
 };
 
