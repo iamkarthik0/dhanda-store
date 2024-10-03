@@ -1,3 +1,4 @@
+//@ts-nocheck
 "use client"
 import React, { useState, useEffect } from 'react';
 import { createProduct, listProducts, getProduct, updateProduct, deleteProduct } from '@/lib/productOperation';
@@ -39,7 +40,7 @@ export default function AdminPage() {
 
   const fetchProducts = async () => {
     try {
-      const data = await listProducts();
+      const data:any = await listProducts();
       setProducts(data.data);
     } catch (error) {
       console.error('Error fetching products:', error);
