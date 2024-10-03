@@ -7,10 +7,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
+import { useUser } from "@/context/UserContext";
 
 const SearchResults = () => {
   const searchParams = useSearchParams();
   const query = searchParams.get("query");
+  const { user } = useUser();
+  console.log(user);
+
 
   // Mock search results (replace with actual data fetching logic)
   const searchResults = [

@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { useEffect, useState } from "react"
 import { useCart } from "@/context/CartContext"
+import { signOut } from "aws-amplify/auth"
+import { useUser } from '@/context/UserContext'
 
 import GlobalSearch from "./GlobalSearch"
 
@@ -17,15 +19,7 @@ export default function Navbar() {
   const { scrollY } = useScroll()
   const [cartItemCount, setCartItemCount] = useState(0)
   const { cart } = useCart()
-
-
-
-
-
-
-
-
-
+  const { user, refreshUser } = useUser()
 
   // Dynamic styles for header based on scroll position
   const headerBackground = useTransform(
@@ -49,8 +43,15 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", updateScroll)
   }, [])
 
-
-
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      await refreshUser();
+      // Redirect or update state as needed after sign out
+    } catch (error) {
+      console.error('Error signing out: ', error);
+    }
+  }
 
   return (
     // Main header component with dynamic styling
@@ -119,6 +120,18 @@ export default function Navbar() {
               )}
             </motion.div>
           </Link>
+          {/* Sign In/Sign Out Button */}
+          {user ? (
+            <Button variant="outline" size="sm" onClick={handleSignOut}>
+              Sign Out
+            </Button>
+          ) : (
+            <Link href="/sign-in">
+              <Button variant="outline" size="sm">
+                Sign In
+              </Button>
+            </Link>
+          )}
         </motion.nav>
 
         {/* Mobile menu sheet */}
@@ -192,7 +205,19 @@ export default function Navbar() {
               <Link href="/cart" className="flex items-center gap-2">
                 <ShoppingCartIcon className="h-6 w-6" />
                 <span className="text-sm font-medium">Cart ({cart.length})</span>
-              </Link>
+              </Link> 
+              {/* Mobile Sign In/Sign Out Button */}
+              {user ? (
+                <Button variant="outline" size="sm" className="w-full" onClick={handleSignOut}>
+                  Sign Out
+                </Button>
+              ) : (
+                <Link href="/sign-in">
+                  <Button variant="outline" size="sm" className="w-full">
+                    Sign In
+                  </Button>
+                </Link>
+              )}
             </div>
           </SheetContent>
         </Sheet>
